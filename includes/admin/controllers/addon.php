@@ -50,6 +50,10 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 							$this->activate();
 							break;
 						}
+						case 'deactivate': {
+							$this->deactivate();
+							break;
+						}
 						case 'reset': {
 							$this->reset();
 							break;
@@ -141,6 +145,18 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 				$redirect = get_admin_url(). 'admin.php?page=tzportfolio-addon';
 			}
 			tp_js_redirect( add_query_arg( 'msg', 'activate', $redirect ) );
+		}
+
+		public function deactivate() {
+			if ( ! empty( $_GET['id'] ) ) {
+				$this->deactivate_plugins($_GET['id']);
+			}
+			if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
+				$redirect = remove_query_arg(array('_wp_http_referer' ), wp_unslash( $_REQUEST['_wp_http_referer'] ) );
+			} else {
+				$redirect = get_admin_url(). 'admin.php?page=tzportfolio-addon';
+			}
+			tp_js_redirect( add_query_arg( 'msg', 'deactivate', $redirect ) );
 		}
 
 		public function edit() {
@@ -524,6 +540,80 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 			 */
 			do_action( 'tp_activated_plugin', $plugin );
 			return true;
+		}
+
+		/**
+		 * Deactivate a single plugin or multiple plugins.
+		 *
+		 * The deactivation hook is disabled by the plugin upgrader by using the $silent
+		 * parameter.
+		 *
+		 * @since 2.5.0
+		 *
+		 * @param string|array $plugins Single plugin or list of plugins to deactivate.
+		 * @param bool $silent Prevent calling deactivation hooks. Default is false.
+		 * @param mixed $network_wide Whether to deactivate the plugin for all sites in the network.
+		 *  A value of null (the default) will deactivate plugins for both the site and the network.
+		 */
+		function deactivate_plugins( $plugins ) {
+			$current = get_option( 'tp_active_plugins', array() );
+
+			foreach ( (array) $plugins as $plugin ) {
+				$plugin = plugin_basename( trim( $plugin ) );
+				if ( ! $this->is_plugin_active( $plugin ) ) {
+					continue;
+				}
+
+				/**
+				 * Fires before a plugin is deactivated.
+				 *
+				 * If a plugin is silently deactivated (such as during an update),
+				 * this hook does not fire.
+				 *
+				 * @since 2.9.0
+				 *
+				 * @param string $plugin               Path to the plugin file relative to the plugins directory.
+				 * @param bool   $network_deactivating Whether the plugin is deactivated for all sites in the network
+				 *                                     or just the current site. Multisite only. Default is false.
+				 */
+				do_action( 'tp_deactivate_plugin', $plugin );
+
+				$key = array_search( $plugin, $current );
+				if ( false !== $key ) {
+					unset( $current[ $key ] );
+				}
+
+				/**
+				 * Fires as a specific plugin is being deactivated.
+				 *
+				 * This hook is the "deactivation" hook used internally by register_deactivation_hook().
+				 * The dynamic portion of the hook name, `$plugin`, refers to the plugin basename.
+				 *
+				 * If a plugin is silently deactivated (such as during an update), this hook does not fire.
+				 *
+				 * @since 2.0.0
+				 *
+				 * @param bool $network_deactivating Whether the plugin is deactivated for all sites in the network
+				 *                                   or just the current site. Multisite only. Default is false.
+				 */
+				do_action( "tp_deactivate_{$plugin}" );
+
+				/**
+				 * Fires after a plugin is deactivated.
+				 *
+				 * If a plugin is silently deactivated (such as during an update),
+				 * this hook does not fire.
+				 *
+				 * @since 2.9.0
+				 *
+				 * @param string $plugin               Path to the plugin file relative to the plugins directory.
+				 * @param bool   $network_deactivating Whether the plugin is deactivated for all sites in the network.
+				 *                                     or just the current site. Multisite only. Default false.
+				 */
+				do_action( 'tp_deactivated_plugin', $plugin );
+			}
+
+			update_option( 'tp_active_plugins', $current );
 		}
 	}
 }
