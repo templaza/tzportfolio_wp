@@ -260,6 +260,15 @@ if ( ! class_exists( 'tp\admin\models\Addon_Model_List' ) ) {
 			return ! empty( $item['Author'] ) ? $item['Author'] : '-';
 		}
 
+		/**
+		 * @param $item
+		 *
+		 * @return string
+		 */
+		function column_description( $item ) {
+			return ! empty( $item['Description'] ) ? $item['Description'] : '-';
+		}
+
 
 		/**
 		 * @param array $attr

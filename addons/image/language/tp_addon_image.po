@@ -1,0 +1,135 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-18 11:35+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Add-On Image
+msgid "PLG_MEDIATYPE_IMAGE"
+msgstr "Media Type - Image"
+
+#: image.xml:10
+msgid "PLG_MEDIATYPE_IMAGE_XML_DESCRIPTION"
+msgstr "Provides image to Articles"
+
+#: admin/models/image.php:287 admin/models/image.php:331
+msgid "PLG_MEDIATYPE_IMAGE_ERROR_WARNINVALID_MIME"
+msgstr "Image invalid mime type detected"
+
+#: admin/models/image.php:293 admin/models/image.php:337
+msgid "PLG_MEDIATYPE_IMAGE_ERROR_WARNFILETYPE"
+msgstr "Image file type is not supported"
+
+#: admin/models/image.php:299 admin/models/image.php:343
+msgid "PLG_MEDIATYPE_IMAGE_ERROR_WARNFILETOOLARGE"
+msgstr "Image's file is too large"
+
+#: image.xml:32
+msgid "PLG_MEDIATYPE_IMAGE_MAXIMUM_FILE_SIZE_LABEL"
+msgstr "Image Maximum Size (in MB)"
+
+#: image.xml:33
+msgid "PLG_MEDIATYPE_IMAGE_MAXIMUM_FILE_SIZE_DESC"
+msgstr "The maximum size for an upload (in megabytes). Use zero for no limit. Note: your server has a maximum limit"
+
+#: image.xml:36
+msgid "PLG_MEDIATYPE_IMAGE_FILE_TYPES_LABEL"
+msgstr "Image File Types"
+
+#: image.xml:37
+msgid "PLG_MEDIATYPE_IMAGE_FILE_TYPES_DESC"
+msgstr "Image extensions (file types) you are allowed to upload (comma separated). These are used to check for valid image headers"
+
+#: image.xml:40
+msgid "PLG_MEDIATYPE_IMAGE_LEGAL_MIME_TYPE_LABEL"
+msgstr "Image Legal MIME Types"
+
+#: image.xml:41
+msgid "PLG_MEDIATYPE_IMAGE_LEGAL_MIME_TYPE_DESC"
+msgstr "A comma separated list of legal MIME types for upload"
+
+#: image.xml:44
+msgid "PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+msgstr "Image Size"
+
+#: image.xml:47
+msgid "PLG_MEDIATYPE_IMAGE_TITLE_LABEL"
+msgstr "Title"
+
+#: image.xml:50
+msgid "PLG_MEDIATYPE_IMAGE_WIDTH_LABEL"
+msgstr "Width"
+
+#: image.xml:53
+msgid "PLG_MEDIATYPE_IMAGE_NAME_PREFIX"
+msgstr "Prefix"
+
+#: image.xml:60
+msgid "PLG_MEDIATYPE_IMAGE_FRONT_END_FIELDSET_LABEL"
+msgstr "Front-End Options"
+
+#: image.xml:61
+msgid "PLG_MEDIATYPE_IMAGE_CONFIG_SETTINGS_DESC"
+msgstr "Global configuration for images"
+
+#: image.xml:65
+msgid "PLG_MEDIATYPE_IMAGE_SHOW_FEED_IMAGE_LABEL"
+msgstr "Show Feed Image"
+
+#: image.xml:75
+msgid "PLG_MEDIATYPE_IMAGE_FEED_SIZE_LABEL"
+msgstr "Feed Image Size"
+
+#: image.xml:76
+msgid "PLG_MEDIATYPE_IMAGE_ORIGINAL"
+msgstr "Original"
+
+#: image.xml:80
+msgid "PLG_MEDIATYPE_IMAGE_SHOW_ORIGINAL_GIF_LABEL"
+msgstr "Show Original Gif Image"
+
+#: image.xml:92
+msgid "PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_LABEL"
+msgstr "Show Image"
+
+#: image.xml:93
+msgid "PLG_MEDIATYPE_IMAGE_SHOW_IMAGE_DESC"
+msgstr "If set to Show, the image is shown"
+
+#: image.xml:103
+msgid "PLG_MEDIATYPE_IMAGE_SIZE_LABEL"
+msgstr "Image Size"
+
+#: image.xml:104
+msgid "PLG_MEDIATYPE_IMAGE_SIZE_DESC"
+msgstr "Sizes of images shown on pages"
+
+#: image.xml:134
+msgid "PLG_MEDIATYPE_IMAGE_RELATED_SHOW_IMAGE_LABEL"
+msgstr "Show Related Image"
+
+#: image.xml:144
+msgid "PLG_MEDIATYPE_IMAGE_RELATED_SIZE_LABEL"
+msgstr "Related Image Size"
+
+#: image.xml:145
+msgid "PLG_MEDIATYPE_IMAGE_RELATED_SIZE_DESC"
+msgstr "Image size of related article shown on pages with 'Article' view"
+
+
+#: image.xml:
+msgid ""
+msgstr ""

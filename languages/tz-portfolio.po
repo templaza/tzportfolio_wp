@@ -2,22 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: TZ Portfolio\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-11 10:26+0000\n"
-"PO-Revision-Date: 2019-04-11 10:30+0000\n"
-"Last-Translator: admin <admin@localhost.com>\n"
-"Language-Team: English (United States)\n"
-"Language: en_US\n"
+"PO-Revision-Date: 2019-04-11 17:58+0700\n"
+"Language-Team: Tiếng Việt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.2.2; wp-5.1.1"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Loco-Version: 2.2.2; wp-5.1.1\n"
+"Last-Translator: \n"
+"Language: vi\n"
 
 #: includes/admin/admin-functions.php:89
 msgid "Wrong Nonce"
@@ -29,7 +29,6 @@ msgid "Show All %s"
 msgstr ""
 
 #: includes/controllers/common.php:41 includes/lib/field-list.php:39
-#: includes/admin/controllers/admin-menu.php:133
 #: includes/admin/controllers/admin-menu.php:133
 msgid "Posts"
 msgstr ""
@@ -164,7 +163,6 @@ msgstr ""
 
 #: includes/controllers/common.php:114 includes/lib/field-list.php:112
 #: includes/admin/controllers/admin-menu.php:135
-#: includes/admin/controllers/admin-menu.php:135
 msgid "Tags"
 msgstr ""
 
@@ -221,7 +219,6 @@ msgstr ""
 
 #: includes/admin/controllers/addon.php:90
 #: includes/admin/controllers/admin-menu.php:191
-#: includes/admin/controllers/admin-menu.php:191
 msgid "Add-ons"
 msgstr ""
 
@@ -245,13 +242,6 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: includes/admin/controllers/addon.php:408
-msgid "PLG_MEDIATYPE_IMAGE"
-msgstr "Image test"
-
-#: includes/admin/controllers/addon.php:411
-msgid "PLG_MEDIATYPE_IMAGE_XML_DESCRIPTION"
-msgstr "Testaaaaa"
 
 #: includes/admin/controllers/admin-enqueue.php:96
 msgid "e.g. Posts Manager"
@@ -517,3 +507,69 @@ msgstr ""
 #. Author of the plugin
 msgid "TemPlaza, Sonny"
 msgstr ""
+
+
+#. Author of the plugin
+msgid "JHIDE"
+msgstr "Hide"
+
+#. Author of the plugin
+msgid "JSHOW"
+msgstr "Show"
+
+#. Author of the plugin
+msgid "JYES"
+msgstr "Yes"
+
+#. Author of the plugin
+msgid "JNO"
+msgstr "No"
+
+#. Author of the plugin
+msgid "JACTION_EDIT"
+msgstr "Edit"
+
+#. Author of the plugin
+msgid "JLIB_FORM_VALIDATE_FIELD_INVALID"
+msgstr "Invalid field: %s"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_UPDATE"
+msgstr "Update"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_RESET"
+msgstr "Reset"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_MOVE"
+msgstr "Move"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_REMOVE"
+msgstr "Remove"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_REMOVE_THIS_ITEM"
+msgstr "Are you sure to remove this item?"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_SPACER_ARTICLE_OPTIONS_IN_CATEGORY_LISTINGS"
+msgstr "Article View Options In Category Listings"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_ATTRIBS_FIELDSET_LABEL"
+msgstr "Article View Options"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_FIELDSET_TAG_LISTINGS_LABEL"
+msgstr "Tag Articles Listings"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_FIELDSET_USER_LISTINGS_LABEL"
+msgstr "User Articles Listings"
+
+#. Author of the plugin
+msgid "COM_TZ_PORTFOLIO_PLUS_FIELDSET_DATE_LISTINGS_LABEL"
+msgstr "Date Articles Listings"
+

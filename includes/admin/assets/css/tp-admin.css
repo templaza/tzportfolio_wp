@@ -1,0 +1,36 @@
+.tp-nav-tab-wrapper {
+    padding-top: 0;
+}
+.tp-form-horizontal .form-group{
+    display: flex;
+    padding: 5px 0;
+}
+.tp-form-horizontal .control-label{
+    width: 200px;
+    font-weight: 600;
+}
+.tp-form-horizontal .controls{
+    flex: 1;
+}
+.tp-form-horizontal input[type=text]{
+    min-width: 25em;
+}
+[data-tp-tabs] .ui-tabs-panel{
+    padding-top: 15px;
+}
+.button-danger{
+    background: #E74C3C;
+}
+.mt-1{
+    margin-top: 1rem;
+}
+.mt-2{
+    margin-top: 2rem;
+}
+.button  .dashicons:before,
+.button-primary .dashicons:before{
+    vertical-align: middle;
+}
+/*.ui-sortable .ui-sortable-helper{*/
+    /*!*position: static !important;*!*/
+/*}*/
