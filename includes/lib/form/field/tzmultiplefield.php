@@ -91,7 +91,7 @@ if ( ! class_exists( 'tp\lib\Form\Field\TZMultipleFieldField' ) ) {
                         <?php echo TPLanguage::_('COM_TZ_PORTFOLIO_PLUS_UPDATE'); ?>
                     </button>
                     <button type="button" class="button js-tp-btn__reset">
-                        <span class="dashicons dashicons-plus"
+                        <span class="dashicons dashicons-no"
                               title="<?php echo TPLanguage::_('COM_TZ_PORTFOLIO_PLUS_RESET'); ?>"></span>
                         <?php echo TPLanguage::_('COM_TZ_PORTFOLIO_PLUS_RESET'); ?>
                     </button>
