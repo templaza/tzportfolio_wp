@@ -181,6 +181,7 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
                 if($data = $_POST['tpform']){
                     $_error = array( 'page' => $_GET['page'], 'action'=>$_GET['action'],
                         'id'=>$_GET['id'], 'msg'=>'' );
+                    $_error['msg']  = 'u';
 
                     $form = $model -> get_form($data, false);
 

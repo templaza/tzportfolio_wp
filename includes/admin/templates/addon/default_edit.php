@@ -26,10 +26,10 @@ wp_enqueue_script( 'tp-addon', plugin_dir_url(tp_plugin).'includes/admin/assets/
     if ( ! empty( $_GET['msg'] ) ) {
 		switch( $_GET['msg'] ) {
 			case 'a':
-				echo '<div id="message" class="updated fade"><p>' . __( 'User Role <strong>Added</strong> Successfully.', 'tz-portfolio' ) . '</p></div>';
+				echo '<div id="message" class="updated fade"><p>' . __( 'Add-On\'s Options <strong>Added</strong> Successfully.', 'tz-portfolio' ) . '</p></div>';
 				break;
 			case 'u':
-				echo '<div id="message" class="updated fade"><p>' . __( 'User Role <strong>Updated</strong> Successfully.', 'tz-portfolio' ) . '</p></div>';
+				echo '<div id="message" class="updated fade"><p>' . __( 'Add-On\'s Options <strong>Updated</strong> Successfully.', 'tz-portfolio' ) . '</p></div>';
 				break;
 			case 'e':
 				echo '<div id="message" class="error fade"><p>' . __( 'Can Not <strong>Updated</strong>.', 'tz-portfolio' ) . '</p></div>';
