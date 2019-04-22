@@ -37,12 +37,8 @@ wp_enqueue_script( 'tp-addon', plugin_dir_url(tp_plugin).'includes/admin/assets/
 		}
 	}
 
-	if ($error) {
-	    ?>
-		<div id="message" class="<?php echo $message['type']?$message['type']:'updated'; ?> fade">
-			<p><?php echo $error ?></p>
-		</div>
-	<?php } ?>
+
+    ?>
 
 	<form id="tp-addons__settings" action="" method="post">
 

@@ -78,7 +78,6 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 		 * Get List Table
 		 */
 		public function getListTable () {
-			global $wp_roles;
 			if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
 				$redirect = remove_query_arg(array('_wp_http_referer' ), wp_unslash( $_REQUEST['_wp_http_referer'] ) );
 			} else {
@@ -178,7 +177,7 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
                 $this -> data_edit['item']          = $model -> get_item($id);
                 $this -> data_edit['textDomain']    = AddOnHelper::getTextDomainById($id);
 
-                if($data = $_POST['tpform']){
+	            if(isset($_POST['tpform']) && ($data = $_POST['tpform'])){
                     $_error = array( 'page' => $_GET['page'], 'action'=>$_GET['action'],
                         'id'=>$_GET['id'], 'msg'=>'' );
                     $_error['msg']  = 'u';
