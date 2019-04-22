@@ -30,6 +30,8 @@ if ( ! class_exists( 'tp\controllers\Common' ) ) {
 		}
 
 
+
+
 		/**
 		 * Create taxonomies for use for TZ Portfolio
 		 */

@@ -11,7 +11,8 @@
         <input type="button" class="cancel_popup button" value="<?php _e( 'Cancel', 'tz-portfolio' ) ?>" onclick="window.location = '<?php echo add_query_arg( array( 'page' => 'tzportfolio-acl' ), admin_url( 'admin.php' ) ) ?>';" />
 	</h2>
 
-	<?php if ( ! empty( $_GET['msg'] ) ) {
+	<?php
+    if ( ! empty( $_GET['msg'] ) ) {
 		switch( $_GET['msg'] ) {
 			case 'a':
 				echo '<div id="message" class="updated fade"><p>' . __( 'User Role <strong>Added</strong> Successfully.', 'tz-portfolio' ) . '</p></div>';

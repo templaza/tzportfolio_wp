@@ -598,3 +598,29 @@ function tp_let_to_num( $v ) {
 function tp_maybe_unset_time_limit() {
 	@set_time_limit( 0 );
 }
+
+/**
+ * Add slash for html to use js
+ */
+function tp_js_add_slashes($s){
+
+    $o="";
+    $l=strlen($s);
+    for($i=0;$i<$l;$i++)
+    {
+        $c=$s[$i];
+        switch($c)
+        {
+            case '<': $o.='\\x3C'; break;
+            case '>': $o.='\\x3E'; break;
+            case '\'': $o.='\\\''; break;
+            case '\\': $o.='\\\\'; break;
+            case '"':  $o.='\\"'; break;
+            case "\n": $o.='\\n'; break;
+            case "\r": $o.='\\r'; break;
+            default:
+                $o.=$c;
+        }
+    }
+    return $o;
+}

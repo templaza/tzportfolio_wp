@@ -12,12 +12,14 @@ Domain Path: /languages
 namespace tp\admin\controllers;
 
 // Exit if accessed directly.
+use tp\lib\utilities\AddOnHelper;
 use tp\MVC;
+use tp\lib\models;
+use tp\lib\utilities\File;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
-
 
 	/**
 	 * Class ACL
@@ -26,6 +28,8 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 	class Addon extends MVC {
 		var $list_table = null;
 		var $data_edit  = null;
+		var $messages   = array();
+
 		/**
 		 * ACL constructor.
 		 */
@@ -44,21 +48,25 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 				$this->display('', 'edit');
 			} else {
 				if ( isset( $_GET['action'] ) ) {
-					switch ( $_GET['action'] ) {
-						/* delete action */
-						case 'activate': {
-							$this->activate();
-							break;
-						}
-						case 'deactivate': {
-							$this->deactivate();
-							break;
-						}
-						case 'reset': {
-							$this->reset();
-							break;
-						}
-					}
+				    $action = $_GET['action'];
+				    if(method_exists($this, $action)){
+				        $this -> {$action}();
+                    }
+//					switch ( $_GET['action'] ) {
+//						/* delete action */
+//						case 'activate': {
+//							$this->activate();
+//							break;
+//						}
+//						case 'deactivate': {
+//							$this->deactivate();
+//							break;
+//						}
+//						case 'settings': {
+//							$this->settings();
+//							break;
+//						}
+//					}
 				} else {
 					tp_js_redirect( get_admin_url(). 'admin.php?page=tzportfolio-addon' );
 				}
@@ -101,7 +109,8 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 				'type'          => __( 'Type', 'tz-portfolio' ),
 				'element'       => __( 'Element', 'tz-portfolio' ),
 				'version'       => __( 'Version', 'tz-portfolio' ),
-				'author'       => __( 'Author', 'tz-portfolio' )
+				'author'        => __( 'Author', 'tz-portfolio' ),
+				'description'   => __( 'Description', 'tz-portfolio' )
 			) );
 
 			$this->list_table->set_sortable_columns( array(
@@ -159,125 +168,49 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 			tp_js_redirect( add_query_arg( 'msg', 'deactivate', $redirect ) );
 		}
 
-		public function edit() {
-			wp_enqueue_script( 'postbox' );
-			wp_enqueue_media();
+		public function settings(){
+            $id = $_GET['id'];
 
-			/**
-			 * MP hook
-			 *
-			 * @type action
-			 * @title tp_roles_add_meta_boxes
-			 * @description Add meta boxes on add/edit TP Role
-			 * @input_vars
-			 * [{"var":"$meta","type":"string","desc":"Meta Box Key"}]
-			 * @change_log
-			 * ["Since: 2.0"]
-			 * @usage add_action( 'tp_roles_add_meta_boxes', 'function_name', 10, 1 );
-			 * @example
-			 * <?php
-			 * add_action( 'tp_roles_add_meta_boxes', 'my_roles_add_meta_boxes', 10, 1 );
-			 * function my_roles_add_meta_boxes( $meta ) {
-			 *     // your code here
-			 * }
-			 * ?>
-			 */
-			$roleApp    =   \TPApp()->call('roles');
-			$this->data_edit['form']        =   $this->getModel('Edit');
-			$this->data_edit['form']->roles =   $roleApp;
-			$this->data_edit['form']->add_metabox_role();
-			do_action( 'tp_roles_add_meta_boxes', 'tp_role_meta' );
+            if($id){
+                $model  = $this->getModel('Edit');
 
-			$data = array();
-			$option = array();
-			global $wp_roles;
+                $this -> data_edit['form']          = $model -> get_form();
+                $this -> data_edit['item']          = $model -> get_item($id);
+                $this -> data_edit['textDomain']    = AddOnHelper::getTextDomainById($id);
 
-			if ( ! empty( $_GET['id'] ) ) {
-				$data = get_option( "tp_role_{$_GET['id']}_meta" );
-				if ( empty( $data['_tp_is_custom'] ) )
-					$data['name'] = $wp_roles->roles[ $_GET['id'] ]['name'];
-			}
+                if($data = $_POST['tpform']){
+                    $_error = array( 'page' => $_GET['page'], 'action'=>$_GET['action'],
+                        'id'=>$_GET['id'], 'msg'=>'' );
+                    $_error['msg']  = 'u';
 
+                    $form = $model -> get_form($data, false);
 
-			if ( ! empty( $_POST['role'] ) ) {
+                    if (!$form)
+                    {
+                        $_error['msg']  = 'e';
+                    }else{
+                        // Test whether the data is valid.
+                        $validData = $model->validate($form, $data);
 
-				$data = $_POST['role'];
+                        // Check for validation errors.
+                        if ($validData === false)
+                        {
+                            $_error['msg']  = 'e';
+                        }elseif (!$model->save($validData))
+                        {
+                            $_error['msg']  = 'e';
+                        }
+                    }
 
-				// Song data
-				$data['edit_tp_post'] = $data['read_tp_post'] = $data['edit_tp_posts'];
-				$data['delete_tp_post'] = $data['delete_tp_posts'];
+                    $redirect = add_query_arg( $_error, admin_url( 'admin.php' ) );
 
-				$id = '';
-				$redirect = '';
-				$error = '';
-				if ( empty( $data['name'] ) ) {
+                    tp_js_redirect( $redirect);
 
-					$error .= __( 'Title is empty!', 'tz-portfolio' ) . '<br />';
+                }
 
-				} else {
-
-					if ( 'edit' == $_GET['action'] && ! empty( $_GET['id'] ) ) {
-						$id = $_GET['id'];
-						$redirect = add_query_arg( array( 'page' => 'tzportfolio-acl', 'action'=>'edit', 'id'=>$id, 'msg'=>'u' ), admin_url( 'admin.php' ) );
-					}
-
-				}
-
-				$all_roles = array_keys( get_editable_roles() );
-				if ( 'add' == $_GET['action'] ) {
-					if ( in_array( 'tp_' . $id, $all_roles ) || in_array( $id, $all_roles ) )
-						$error .= __( 'Role already exists!', 'tz-portfolio' ) . '<br />';
-				}
-
-				if ( '' == $error ) {
-
-					if ( 'add' == $_GET['action'] ) {
-						$roles = get_option( 'tp_roles' );
-						$roles[] = $id;
-
-						update_option( 'tp_roles', $roles );
-					}
-
-					$role_meta = $data;
-					if (isset($role_meta['name'])) unset($role_meta['name']);
-					unset( $role_meta['id'] );
-					update_option( "tp_role_{$id}_meta", $role_meta );
-					$roleApp->set_roles($id);
-
-					tp_js_redirect( $redirect );
-				}
-			}
-
-			global $current_screen;
-			$this->data_edit['screen_id']   =   $current_screen->id;
-			$this->data_edit['data']        =   $data;
-			$this->data_edit['option']      =   $option;
-
-		}
-		public function reset() {
-			if ( isset( $_REQUEST['_wp_http_referer'] ) ) {
-				$redirect = remove_query_arg(array('_wp_http_referer' ), wp_unslash( $_REQUEST['_wp_http_referer'] ) );
-			} else {
-				$redirect = get_admin_url(). 'admin.php?page=tzportfolio-acl';
-			}
-			$role_keys = array();
-			if ( isset( $_REQUEST['id'] ) ) {
-				check_admin_referer( 'tp_role_reset' .  $_REQUEST['id'] . get_current_user_id() );
-				$role_keys = (array)$_REQUEST['id'];
-			} elseif( isset( $_REQUEST['item'] ) )  {
-				check_admin_referer( 'bulk-' . sanitize_key( __( 'Roles', 'tz-portfolio' ) ) );
-				$role_keys = $_REQUEST['item'];
-			}
-			if ( ! count( $role_keys ) )
-				tp_js_redirect( $redirect );
-
-			$roleApp    =   \TPApp()->call('roles');
-			foreach ( $role_keys as $k=>$role_key ) {
-				$roleApp->reset_default_role($role_key);
-			}
-
-			tp_js_redirect( add_query_arg( 'msg', 'reset', $redirect ) );
-		}
+                $this -> display('', 'edit');
+            }
+        }
 
 		/**
 		 * Check the plugins directory and retrieve all plugin files with plugin data.
@@ -333,7 +266,9 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 								if ( substr( $subfile, 0, 1 ) == '.' ) {
 									continue;
 								}
-								if ( substr( $subfile, -4 ) == '.php' ) {
+								if ( substr( $subfile, -4 ) == '.xml' ) {
+									$plugin_files[] = "$file/$subfile";
+								}elseif ( substr( $subfile, -4 ) == '.php' ) {
 									$plugin_files[] = "$file/$subfile";
 								}
 							}
@@ -348,6 +283,7 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 				closedir( $plugins_dir );
 			}
 
+
 			if ( empty( $plugin_files ) ) {
 				return $wp_plugins;
 			}
@@ -357,7 +293,8 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 					continue;
 				}
 
-				$plugin_data = $this->get_plugin_data( "$plugin_root/$plugin_file", false, false ); //Do not apply markup/translate as it'll be cached.
+//				$plugin_data = $this->get_plugin_data( "$plugin_root/$plugin_file", false, false ); //Do not apply markup/translate as it'll be cached.
+				$plugin_data = $this->get_plugin_data_xml( "$plugin_root/$plugin_file", false, false ); //Do not apply markup/translate as it'll be cached.
 
 				if ( empty( $plugin_data['Name'] ) ) {
 					continue;
@@ -451,6 +388,43 @@ if ( ! class_exists( 'tp\admin\controllers\Addon' ) ) {
 				'_sitewide'   => 'Site Wide Only',
 			);
 			$plugin_data = get_file_data( $plugin_file, $default_headers, 'plugin' );
+			// Site Wide Only is the old header for Network
+			if ( ! $plugin_data['Network'] && $plugin_data['_sitewide'] ) {
+				/* translators: 1: Site Wide Only: true, 2: Network: true */
+				_deprecated_argument( __FUNCTION__, '3.0.0', sprintf( __( 'The %1$s plugin header is deprecated. Use %2$s instead.' ), '<code>Site Wide Only: true</code>', '<code>Network: true</code>' ) );
+				$plugin_data['Network'] = $plugin_data['_sitewide'];
+			}
+			$plugin_data['Network'] = ( 'true' == strtolower( $plugin_data['Network'] ) );
+			unset( $plugin_data['_sitewide'] );
+
+			// If no text domain is defined fall back to the plugin slug.
+			if ( ! $plugin_data['TextDomain'] ) {
+				$plugin_slug = dirname( plugin_basename( $plugin_file ) );
+				if ( '.' !== $plugin_slug && false === strpos( $plugin_slug, '/' ) ) {
+					$plugin_data['TextDomain'] = $plugin_slug;
+				}
+			}
+
+			if ( $markup || $translate ) {
+				$plugin_data = _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup, $translate );
+			} else {
+				$plugin_data['Title']      = $plugin_data['Name'];
+				$plugin_data['AuthorName'] = $plugin_data['Author'];
+			}
+
+			return $plugin_data;
+		}
+
+		function get_plugin_data_xml( $plugin_file, $markup = true, $translate = true ) {
+
+		    $ext    = File::getExt($plugin_file);
+
+		    if($ext != 'xml'){
+		        return false;
+            }
+
+            $plugin_data    = AddOnHelper::getManifestByXMLFile($plugin_file);
+
 			// Site Wide Only is the old header for Network
 			if ( ! $plugin_data['Network'] && $plugin_data['_sitewide'] ) {
 				/* translators: 1: Site Wide Only: true, 2: Network: true */

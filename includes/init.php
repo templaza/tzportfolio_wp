@@ -11,6 +11,7 @@ Domain Path: /languages
 */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+use tp\lib\Language\TPLanguage;
 
 if ( ! class_exists( 'TPApp' ) ) {
 
@@ -225,9 +226,10 @@ if ( ! class_exists( 'TPApp' ) ) {
 			 * }
 			 * ?>
 			 */
-			$language_domain = apply_filters( 'tp_language_textdomain', 'tp-portfolio' );
+			$language_domain = apply_filters( 'tp_language_textdomain', 'tz-portfolio' );
 
 			$language_file = WP_LANG_DIR . '/plugins/' . $language_domain . '-' . $language_locale . '.mo';
+
 
 			/**
 			 * TPApp hook
@@ -252,6 +254,10 @@ if ( ! class_exists( 'TPApp' ) ) {
 			$language_file = apply_filters( 'tp_language_file', $language_file );
 
 			load_textdomain( $language_domain, $language_file );
+
+            TPLanguage::loadTextDomain($language_domain);
+//            load_plugin_textdomain($language_domain, false, plugin_dir_path(__DIR__));
+
 		}
 
 		/**
@@ -393,6 +399,18 @@ if ( ! class_exists( 'TPApp' ) ) {
 			}
 			return $this->classes['mvc'];
 		}
+
+        /**
+         * @since 2.0
+         *
+         * @return tp\MVC()
+         */
+        function fieldlist() {
+            if ( empty( $this->classes['fieldlist'] ) ) {
+                $this->classes['fieldlist'] = new tp\lib\Field_list();
+            }
+            return $this->classes['fieldlist'];
+        }
 
 		/**
 		 * @since 2.0
